@@ -1,3 +1,25 @@
+
+# Problem has been udpated:
+```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    result=[]
+    def searchBST(self, root, val):
+        """
+        :type root: Optional[TreeNode]
+        :type val: int
+        :rtype: Optional[TreeNode]
+        """
+        if root is None or root.val==val:
+            return root
+        return self.searchBST(root.left,val) if val<root.val else self.searchBST(root.right,val)
+```
+
 # 700. Search in a Binary Search Tree
 
 ## Problem Statement
@@ -70,3 +92,5 @@ def searchBST_iterative(root: TreeNode, val: int) -> TreeNode:
 ## Conclusion
 
 Both recursive and iterative approaches efficiently search for a value in a BST. The iterative approach is more space-efficient, while the recursive approach is more intuitive.
+
+

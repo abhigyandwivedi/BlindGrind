@@ -123,22 +123,16 @@ import heapq
 
 def topKFrequent(words, k):
     # Step 1: Count the frequency of each word
-    count = Counter(words)  # O(N)
+    count = Counter(words)
     
-    # Step 2: Use a heap to store words sorted by frequency and lexicographical order
-    heap = []
+    # Step 2: Use a max-heap (negative frequency to make it max-heap)
+    heap = [(-freq, word) for word, freq in count.items()]
+    heapq.heapify(heap)  # O(M) to heapify all elements
+
+    # Step 3: Extract the top k elements from the heap
+    result = [heapq.heappop(heap)[1] for _ in range(k)]  # O(k log M)
     
-    for word, freq in count.items():  # O(M)
-        heapq.heappush(heap, (freq, word))  # O(log M)
-        if len(heap) > k:
-            heapq.heappop(heap)  # O(log M)
-    
-    # Step 3: Extract words from the heap, sorting by frequency descending and lexicographically
-    result = []
-    while heap:  # O(k log k)
-        result.append(heapq.heappop(heap)[1])
-    
-    return result[::-1]  # Reverse because heapq produces the elements in ascending order
+    return result
 
 # Example Usage
 print(topKFrequent(["i", "love", "leetcode", "i", "love", "coding"], 2))  
@@ -160,31 +154,19 @@ count = Counter(words)
 
 ### **2. Constructing a Min-Heap (`heapq.heappush`)**
 ```python
-for word, freq in count.items():
-	heapq.heappush(heap, (freq, word))
-	if len(heap) > k:
-	    heapq.heappop(heap)
+heap = [(-freq, word) for word, freq in count.items()]
+heapq.heapify(heap)
 ```
-
 - **M** is the number of unique words.
-- **Each `heappush()` takes O(log k)** because the heap has at most `k` elements.
-- **Each `heappop()` takes O(log k)** and is called when the heap exceeds `k` elements.
-- The loop runs **O(M)** times.
+- `heapify` builds the heap in **O(M)** time.
 
-👉 **Total complexity: O(M log k)**
+👉 **Total complexity: O(M)**
 
 ### **3. Extracting k elements from the heap (`heappop()`)**
 ```python
-while heap:
-    result.append(heapq.heappop(heap)[1])
+result = [heapq.heappop(heap)[1] for _ in range(k)]
 ```
-- Extracting `k` elements from the heap takes **O(k log k)**.
-
-### **4. Reversing the List**
-```python
-return result[::-1]
-```
-- Reversing a list of `k` elements takes **O(k)**.
+- Extracting `k` elements from the heap takes **O(k log M)**.
 
 ---
 
@@ -193,14 +175,13 @@ return result[::-1]
 | Step                      | Complexity                   |
 | ------------------------- | ---------------------------- |
 | Counting word frequencies | **O(N)**                     |
-| Inserting into heap       | **O(M log k)**               |
-| Extracting from heap      | **O(k log k)**               |
-| Reversing the list        | **O(k)**                     |
-| **Total Complexity**      | **O(N + M log k + k log k)** |
+| Heapify operation         | **O(M)**                     |
+| Extracting from heap      | **O(k log M)**               |
+| **Total Complexity**      | **O(N + M + k log M)**       |
 
 Since `M ≤ N` in the worst case, we can approximate it as:
 
-👉 **Final Time Complexity: O(N log k)**  
+👉 **Final Time Complexity: O(N + k log M)**  
 This is significantly **faster than O(N log N)** for large inputs.
 
 ---
@@ -213,11 +194,11 @@ count = Counter(words)
 ```
 - Stores **M** unique words → **O(M)**.
 
-### **2. Min-Heap Storage**
+### **2. Heap Storage**
 ```python
-heap = []
+heap = [(-freq, word) for word, freq in count.items()]
 ```
-- Stores at most **k** elements → **O(k)**.
+- Stores **M** elements → **O(M)**.
 
 ### **3. Output List**
 ```python
@@ -230,8 +211,8 @@ result = []
 | Component            | Space Complexity |
 | -------------------- | ---------------- |
 | `Counter` Dictionary | **O(M)**         |
-| Min-Heap             | **O(k)**         |
-| Output List          | **O(k)**         |
+| Heap Storage        | **O(M)**         |
+| Output List         | **O(k)**         |
 | **Total Complexity** | **O(M + k)**     |
 
 Since `M ≤ N`, worst-case space complexity is:
@@ -245,6 +226,6 @@ Since `M ≤ N`, worst-case space complexity is:
 | Approach                   | Time Complexity | Space Complexity |
 | -------------------------- | --------------- | ---------------- |
 | **Sorting-Based**          | **O(N log N)**  | **O(N + k)**     |
-| **Heap-Based** (Optimized) | **O(N log k)**  | **O(N + k)**     |
+| **Heap-Based** (Optimized) | **O(N + k log M)**  | **O(N + k)**     |
 
 🔹 **Heap-based approach is more efficient** than sorting for large values of `N`, especially when `k << N`, because it avoids full sorting. 🚀

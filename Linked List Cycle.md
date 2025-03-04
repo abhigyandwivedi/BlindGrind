@@ -33,14 +33,16 @@ class ListNode:
         self.next = next
 
 def hasCycle(head: ListNode) -> bool:
-    slow, fast = head, head
-    while fast and fast.next:
-        slow = slow.next
-        fast = fast.next.next
-        if slow == fast:
-            return True
-    return False
-
+   if head is None:
+		return False
+	slow = head
+	fast = head.next
+	while slow != fast:
+		if fast is None or fast.next is None:
+			return False
+		slow = slow.next
+		fast = fast.next.next
+	return True
 # Example usage
 # node1 = ListNode(3)
 # node2 = ListNode(2)
@@ -89,3 +91,17 @@ True
 ## Conclusion
 
 This solution efficiently detects cycles in a linked list using the Floyd's Cycle Detection algorithm, ensuring linear time complexity and constant space complexity.
+
+# Better Performance:
+```python
+       if head is None:
+            return False
+        slow = head
+        fast = head.next
+        while slow != fast:
+            if fast is None or fast.next is None:
+                return False
+            slow = slow.next
+            fast = fast.next.next
+        return True
+```

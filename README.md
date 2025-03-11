@@ -1,7 +1,7 @@
 
 
 # All DP problems
-[[31 DP Problems of All Patterns]]
+[[32 DP Problems of All Patterns]]
 
 # All Problems
 [[BlindGrind]]

@@ -26,10 +26,9 @@ class TreeNode:
         self.right = right
 
 def countNodesEqualToSubtreeAverage(root: TreeNode) -> int:
-    count = 0
+    count_holder = [0]  # Using a list to store count instead of nonlocal variable
     
     def dfs(node):
-        nonlocal count
         if not node:
             return (0, 0)  # (sum, count)
         
@@ -40,17 +39,21 @@ def countNodesEqualToSubtreeAverage(root: TreeNode) -> int:
         total_count = left_count + right_count + 1
         
         if node.val == total_sum // total_count:  # Integer division
-            count += 1
+            count_holder[0] += 1
         
         return (total_sum, total_count)
     
     dfs(root)
-    return count
+    return count_holder[0]  # Access count from the list
+
 ```
 
-## Time Complexity Analysis
 
-- Each node is visited once, leading to **O(N)** complexity, where `N` is the number of nodes in the tree.
+
+## **Time Complexity Analysis**
+
+- Each node is **visited once** → **O(N)**
+- Each node performs **O(1) operations** → **O(N) total**
 
 ## Space Complexity Analysis
 

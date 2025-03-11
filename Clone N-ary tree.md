@@ -27,7 +27,7 @@ def cloneTree(root: 'Node') -> 'Node':
     
     new_root = Node(root.val)
     for child in root.children:
-        new_root.children.append(cloneTree(child))
+        new_root.children.append(self.cloneTree(child))
     
     return new_root
 ```

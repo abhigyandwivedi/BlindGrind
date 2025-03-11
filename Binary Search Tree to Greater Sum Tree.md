@@ -12,7 +12,7 @@ Given the `root` of a Binary Search Tree (BST), convert it into a Greater Sum Tr
 
 ## Code Implementation (Python)
 
-### Recursive Approach
+### Recursive Approach 
 
 ```python
 class TreeNode:
@@ -21,21 +21,24 @@ class TreeNode:
         self.left = left
         self.right = right
 
-def bstToGst(root: TreeNode) -> TreeNode:
-    total_sum = 0
-    
-    def traverse(node):
-        nonlocal total_sum
-        if not node:
-            return
-        
-        traverse(node.right)
-        total_sum += node.val
-        node.val = total_sum
-        traverse(node.left)
-    
-    traverse(root)
-    return root
+def binaryTreeToGst(root: TreeNode) -> TreeNode:
+        def reverse_inorder(node, total):
+            if node is None:
+                return total  # Return the updated total sum
+            
+            # Process the right subtree first
+            total = reverse_inorder(node.right, total)
+            
+            # Update the current node value
+            node.val += total
+            total = node.val  # Update total to the new node value
+            
+            # Process the left subtree
+            return reverse_inorder(node.left, total)
+
+        reverse_inorder(root, 0)  # Start traversal with sum = 0
+        return root
+
 ```
 
 ## Time Complexity Analysis

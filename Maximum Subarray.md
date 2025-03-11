@@ -13,7 +13,7 @@ Explanation: [4,-1,2,1] has the largest sum = 6.
 ```
 
 ---
-
+![[Pasted image 20250305024019.png]]
 ## Approach: Kadane's Algorithm
 
 ### Explanation

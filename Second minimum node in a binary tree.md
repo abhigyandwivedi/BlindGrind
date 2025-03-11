@@ -29,21 +29,23 @@ class TreeNode:
         self.right = right
 
 def findSecondMinimumValue(root: TreeNode) -> int:
-    second_min = float('inf')
-    min_val = root.val
-    
-    def traverse(node):
-        nonlocal second_min
-        if not node:
-            return
-        if min_val < node.val < second_min:
-            second_min = node.val
-        elif node.val == min_val:
-            traverse(node.left)
-            traverse(node.right)
-    
-    traverse(root)
-    return second_min if second_min != float('inf') else -1
+        if not root:
+            return -1
+        
+        second_min = [float('inf')]  # Use a list to make it mutable inside the helper function
+        min_val = root.val
+        
+        def traverse(node):
+            if not node:
+                return
+            if min_val < node.val < second_min[0]:
+                second_min[0] = node.val
+            elif node.val == min_val:
+                traverse(node.left)
+                traverse(node.right)
+        
+        traverse(root)
+        return second_min[0] if second_min[0] != float('inf') else -1
 ```
 
 ## Time Complexity Analysis

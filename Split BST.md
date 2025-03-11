@@ -34,11 +34,11 @@ def splitBST(root: TreeNode, target: int):
         return [None, None]
     
     if root.val <= target:
-        left_subtree, right_subtree = splitBST(root.right, target)
+        left_subtree, right_subtree = self.splitBST(root.right, target)
         root.right = left_subtree
         return [root, right_subtree]
     else:
-        left_subtree, right_subtree = splitBST(root.left, target)
+        left_subtree, right_subtree = self.splitBST(root.left, target)
         root.left = right_subtree
         return [left_subtree, root]
 ```

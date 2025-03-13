@@ -1,5 +1,4 @@
-# 
-## 32 DP Problems for Technical Interviews
+# 32 DP Problems for Technical Interviews
 
 Master these problems to excel in DP questions during your technical interviews.
 

@@ -25,7 +25,7 @@ Output: 3
 ## Implementation in Python
 
 ```python
-def majorityElement(nums):
+def majority_element(nums):
     count, candidate = 0, None
 
     for num in nums:
@@ -44,7 +44,7 @@ Input:
 
 ```python
 nums = [3, 2, 3]
-print(majorityElement(nums))
+print(majority_element(nums))
 ```
 
 Output:
@@ -77,3 +77,63 @@ Output:
 ## Conclusion
 
 The Boyer-Moore Voting Algorithm ensures efficient majority detection in linear time with constant space.
+
+
+**********************************
+# Majority Element ii
+
+```python
+class Solution(object):
+    def majority_element_ii(self, nums):
+            """
+            :type nums: List[int]
+            :rtype: List[int]
+            """
+            n = len(nums)
+
+            # Initialize two candidates and their counts
+            ele1, ele2 = -1, -1
+            cnt1, cnt2 = 0, 0
+
+            for ele in nums:
+                # Increment count for candidate 1
+                if ele1 == ele:
+                    cnt1 += 1
+                # Increment count for candidate 2
+                elif ele2 == ele:
+                    cnt2 += 1
+                # New candidate 1 if count is zero
+                elif cnt1 == 0:
+                    ele1 = ele
+                    cnt1 += 1
+                # New candidate 2 if count is zero
+                elif cnt2 == 0:
+                    ele2 = ele
+                    cnt2 += 1
+                # Decrease counts if neither candidate
+                else:
+                    cnt1 -= 1
+                    cnt2 -= 1
+
+            res = []
+            cnt1, cnt2 = 0, 0
+
+            # Count the occurrences of candidates
+            for ele in nums:
+                if ele1 == ele:
+                    cnt1 += 1
+                if ele2 == ele:
+                    cnt2 += 1
+
+            # Add to result if they are majority elements
+            if cnt1 > n / 3:
+                res.append(ele1)
+            if cnt2 > n / 3 and ele1 != ele2:
+                res.append(ele2)
+
+            if len(res) == 2 and res[0] > res[1]:
+                res[0], res[1] = res[1], res[0]
+
+            return res
+                    
+```

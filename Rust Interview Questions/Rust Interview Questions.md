@@ -1,4 +1,4 @@
-
+yi
 ### Question 1 — Describe advanced memory management techniques in Rust, such as using custom allocators and interior pointers. When would these be necessary?
 
 In Rust, the ownership system and automatic memory management provide a safe and efficient approach for most scenarios. However, for advanced use cases, techniques like custom allocators and interior pointers offer greater control over memory management. Let’s take a look at each of them.
